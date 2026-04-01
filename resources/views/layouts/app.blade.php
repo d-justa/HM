@@ -53,7 +53,7 @@
 
                 <flux:menu.separator />
 
-                <flux:menu.item icon="arrow-right-start-on-rectangle">Logout</flux:menu.item>
+                <flux:menu.item :href="route('logout')" icon="arrow-right-start-on-rectangle">Logout</flux:menu.item>
             </flux:menu>
         </flux:dropdown>
     </flux:sidebar>
@@ -74,7 +74,7 @@
 
                 <flux:menu.separator />
 
-                <flux:menu.item icon="arrow-right-start-on-rectangle">Logout</flux:menu.item>
+                <flux:menu.item :href="route('logout')" icon="arrow-right-start-on-rectangle">Logout</flux:menu.item>
             </flux:menu>
         </flux:dropdown>
     </flux:header>

@@ -12,3 +12,12 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+[data-flux-label] {
+    @apply mb-1;
+}
+
+[data-flux-field]:has([required]) [data-flux-label]::after {
+    content: " *";
+    @apply text-red-500 font-bold ml-1;
+}

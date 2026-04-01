@@ -6,4 +6,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::livewire('/test', 'pages::test')->name('test');
+require __DIR__ . '/auth.php';
+
+Route::middleware('auth')->group(function() {
+    Route::view('/dashboard', 'dashboard')->name('dashboard');
+});
