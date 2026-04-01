@@ -10,4 +10,6 @@ require __DIR__ . '/auth.php';
 
 Route::middleware('auth')->group(function() {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
+
+    Route::livewire('/properties/create', 'pages::properties.create')->name('properties.create');
 });

@@ -23,8 +23,10 @@
         </flux:sidebar.header>
 
         <flux:sidebar.nav>
-            <flux:sidebar.item icon="home" href="#" current>Home</flux:sidebar.item>
-            <flux:sidebar.item icon="inbox" badge="12" href="#">Inbox</flux:sidebar.item>
+            <flux:sidebar.item icon="home" :href="route('dashboard')">Home</flux:sidebar.item>
+            @can('viewAny', App\Models\Property::class)
+                <flux:sidebar.item icon="inbox" :href="route('properties.create')">Properties</flux:sidebar.item>
+            @endcan
             <flux:sidebar.item icon="document-text" href="#">Documents</flux:sidebar.item>
             <flux:sidebar.item icon="calendar" href="#">Calendar</flux:sidebar.item>
 
@@ -80,11 +82,7 @@
     </flux:header>
 
     <flux:main>
-        <flux:heading size="xl" level="1">Good afternoon, Olivia</flux:heading>
-
-        <flux:text class="mt-2 mb-6 text-base">Here's what's new today</flux:text>
-
-        <flux:separator variant="subtle" />
+        {{ $slot }}
     </flux:main>
 
     @fluxScripts
