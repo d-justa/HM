@@ -25,7 +25,7 @@
         <flux:sidebar.nav>
             <flux:sidebar.item icon="home" :href="route('dashboard')">Home</flux:sidebar.item>
             @can('viewAny', App\Models\Property::class)
-                <flux:sidebar.item icon="inbox" :href="route('properties.create')">Properties</flux:sidebar.item>
+                <flux:sidebar.item icon="inbox" :href="route('properties.index')">Properties</flux:sidebar.item>
             @endcan
             <flux:sidebar.item icon="document-text" href="#">Documents</flux:sidebar.item>
             <flux:sidebar.item icon="calendar" href="#">Calendar</flux:sidebar.item>
