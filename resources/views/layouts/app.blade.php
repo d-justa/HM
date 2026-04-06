@@ -27,7 +27,7 @@
             @can('viewAny', App\Models\Property::class)
                 <flux:sidebar.item icon="inbox" :href="route('properties.index')">Properties</flux:sidebar.item>
             @endcan
-            <flux:sidebar.item icon="document-text" href="#">Documents</flux:sidebar.item>
+            <flux:sidebar.item icon="document-text" :href="route('room-categories.index')">Room Categories</flux:sidebar.item>
             <flux:sidebar.item icon="calendar" href="#">Calendar</flux:sidebar.item>
 
             <flux:sidebar.group expandable icon="star" heading="Favorites" class="grid">

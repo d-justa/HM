@@ -1,13 +1,52 @@
 <?php
 
+use App\Models\RoomCategory;
 use Livewire\Component;
 
 new class extends Component
 {
-    //
+    public ?RoomCategory $roomCategory = null;
+
+    public $property_id = 1;
+    public string $name = '';
+    public string $description = '';
+
+    protected function rules()
+    {
+        return [
+            'property_id' => 'required|exists:properties,id',
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+        ];
+    }
+
+    public function save()
+    {
+        $data = $this->validate();
+
+        RoomCategory::updateOrCreate([
+            'id' => $this->roomCategory?->id
+        ],$data);
+
+        $this->reset();
+
+        return to_route('room-categories.index');
+    }
 };
 ?>
 
 <div>
-    {{-- It is never too late to be what you might have been. - George Eliot --}}
+    <form wire:submit="save" class="space-y-4">
+        <flux:card>
+            <div class="space-y-4">
+                <flux:input label="Name" wire:model="name" required />
+                <flux:textarea label="description" wire:model="description" />
+            </div>
+        </flux:card>
+
+        <div class="flex">
+            <flux:spacer />
+            <flux:button type="submit" variant="primary">Save</flux:button>
+        </div>
+    </form>
 </div>
