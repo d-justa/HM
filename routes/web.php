@@ -17,4 +17,8 @@ Route::middleware('auth')->group(function() {
     Route::view('/room-categories', 'pages::room-categories.index')->name('room-categories.index');
     Route::livewire('/room-categories/create', 'pages::room-categories.form')->name('room-categories.form');
     Route::livewire('/room-categories/{roomCategory}/edit', 'pages::room-categories.form')->name('room-categories.form');
+
+    Route::view('/rooms', 'pages::rooms.index')->name('rooms.index');
+    Route::livewire('/rooms/create', 'pages::rooms.form')->name('rooms.form');
+    Route::livewire('/rooms/{roomCategory}/edit', 'pages::rooms.form')->name('rooms.form');
 });
