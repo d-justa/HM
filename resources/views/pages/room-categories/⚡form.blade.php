@@ -11,6 +11,13 @@ new class extends Component
     public string $name = '';
     public string $description = '';
 
+    public function mount(?RoomCategory $roomCategory = null)
+    {
+        if ($roomCategory && $roomCategory->exists) {
+            $this->fill($roomCategory->toArray());
+        }
+    }
+
     protected function rules()
     {
         return [
@@ -40,7 +47,7 @@ new class extends Component
         <flux:card>
             <div class="space-y-4">
                 <flux:input label="Name" wire:model="name" required />
-                <flux:textarea label="description" wire:model="description" />
+                <flux:textarea label="Description" wire:model="description" />
             </div>
         </flux:card>
 
