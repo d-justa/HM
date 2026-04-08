@@ -8,7 +8,7 @@ Route::get('/', function () {
 
 require __DIR__ . '/auth.php';
 
-Route::middleware('auth')->group(function() {
+Route::middleware('auth')->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
 
     Route::view('/properties', 'pages::properties.index')->name('properties.index');
@@ -21,4 +21,6 @@ Route::middleware('auth')->group(function() {
     Route::view('/rooms', 'pages::rooms.index')->name('rooms.index');
     Route::livewire('/rooms/create', 'pages::rooms.form')->name('rooms.form');
     Route::livewire('/rooms/{roomCategory}/edit', 'pages::rooms.form')->name('rooms.form');
+
+    Route::livewire('/rooms/availability-calendar', 'pages::rooms.availability-calendar')->name('rooms.availability-calendar');
 });

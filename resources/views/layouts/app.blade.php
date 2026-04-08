@@ -27,7 +27,11 @@
                 <flux:sidebar.item icon="inbox" :href="route('properties.index')">Properties</flux:sidebar.item>
             @endcan
             {{-- <flux:sidebar.item icon="document-text" :href="route('room-categories.index')">Room Categories</flux:sidebar.item> --}}
-            <flux:sidebar.item icon="calendar" href="#">Calendar</flux:sidebar.item>
+            <flux:sidebar.group expandable icon="star" heading="Operations" class="grid">
+                <flux:sidebar.item :href="route('rooms.availability-calendar')">Availability Calendar</flux:sidebar.item>
+                {{-- <flux:sidebar.item :href="route('rooms.index')">Rooms</flux:sidebar.item>
+                <flux:sidebar.item href="#">Brand guidelines</flux:sidebar.item> --}}
+            </flux:sidebar.group>
 
             <flux:sidebar.group expandable icon="star" heading="Inventory" class="grid">
                 <flux:sidebar.item :href="route('room-categories.index')">Room Categories</flux:sidebar.item>
