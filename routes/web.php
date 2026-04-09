@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::view('/bookings', 'pages::bookings.index')->name('bookings.index');
     Route::livewire('/bookings/create', 'pages::bookings.create')->name('bookings.create');
 
+    Route::view('/guests', 'pages::guests.index')->name('guests.index');
 
     Route::livewire('/rooms/availability-calendar', 'pages::rooms.availability-calendar')->name('rooms.availability-calendar');
 });
