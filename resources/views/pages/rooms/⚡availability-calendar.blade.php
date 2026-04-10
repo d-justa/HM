@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Booking;
 use App\Models\Room;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -9,6 +10,16 @@ new class extends Component {
     public $currentMonth;
     public $days = [];
     public $rooms;
+    public ?Booking $showingBooking = null;
+
+    public function showBooking($id)
+    {
+        // Eager load guest and source for the flyout
+        $this->showingBooking = Booking::with(['guest', 'rooms'])->find($id);
+
+        // This triggers the Flux modal via Javascript
+        $this->js("Flux.modal('show-booking').show()");
+    }
 
     public function mount()
     {
@@ -77,11 +88,13 @@ new class extends Component {
                         @endphp
 
                         <div
-                            class="h-12 border-b border-l transition-colors cursor-pointer text-[10px] flex items-center justify-center
-        {{ $activeBooking ? 'bg-red-500 hover:bg-red-600 text-white font-bold' : 'hover:bg-gray-50' }}">
+                            class="h-12 border-b border-l transition-colors cursor-pointer text-[10px] flex items-center justify-center">
 
                             @if ($activeBooking)
-                                #{{ $activeBooking->id }}
+                                <flux:button wire:click="showBooking({{ $activeBooking->id }})" variant="ghost"
+                                    size="xs"  :loading="false">
+                                    #{{ $activeBooking->id }}
+                                </flux:button>
                             @endif
 
                         </div>
@@ -94,5 +107,47 @@ new class extends Component {
             <div class="flex items-center gap-1"><span class="w-3 h-3 bg-red-500 rounded"></span> Booked</div>
             <div class="flex items-center gap-1"><span class="w-3 h-3 border rounded"></span> Available</div>
         </div>
+
+        <flux:modal name="show-booking" flyout>
+            <div class="space-y-6">
+                @if ($showingBooking)
+                    <div>
+                        <flux:heading size="lg">Booking #{{ $showingBooking->id }}</flux:heading>
+                        <flux:subheading>{{ $showingBooking->guest->first_name }}
+                            {{ $showingBooking->guest->last_name }}</flux:subheading>
+                    </div>
+
+                    <flux:separator />
+
+                    <div class="space-y-4">
+                        <flux:legend>Stay Information</flux:legend>
+                        <div class="grid grid-cols-2 gap-4">
+                            <flux:text size="sm">Check-in:
+                                <b>{{ $showingBooking->check_in->format('d M, Y') }}</b>
+                            </flux:text>
+                            <flux:text size="sm">Check-out:
+                                <b>{{ $showingBooking->check_out->format('d M, Y') }}</b>
+                            </flux:text>
+                        </div>
+
+                        <flux:separator variant="subtle" />
+
+                        <flux:legend>Guest Contact</flux:legend>
+                        <flux:text size="sm">Email: {{ $showingBooking->guest->email ?? 'N/A' }}</flux:text>
+                        <flux:text size="sm">Phone: {{ $showingBooking->guest->phone ?? 'N/A' }}</flux:text>
+                    </div>
+
+                    <div class="flex">
+                        <flux:spacer />
+                        <flux:button variant="danger" wire:click="deleteBooking({{ $showingBooking->id }})"
+                            wire:confirm="Are you sure?">Cancel Booking</flux:button>
+                    </div>
+                @else
+                    <div class="flex justify-center py-10">
+                        {{-- <flux:icon.spinner class="animate-spin" /> --}}
+                    </div>
+                @endif
+            </div>
+        </flux:modal>
     </div>
 </div>

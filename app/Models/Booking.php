@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use PowerComponents\LivewirePowerGrid\Concerns\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[Fillable(['property_id', 'guest_id', 'check_in', 'check_out', 'status'])]
 class Booking extends Model
