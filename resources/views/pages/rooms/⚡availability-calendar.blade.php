@@ -67,16 +67,23 @@ new class extends Component {
 
                     @foreach ($days as $date)
                         @php
-                            // Using your Spatie-style check (Simplified for the loop)
-                            // $isBooked = $room->bookings->contains(function($booking) use ($date) {
-                            //     return $date->betweenInclusive($booking->check_in, $booking->check_out->subDay());
-                            // });
-                            $isBooked = rand(0,1);
+                            // Use 'first' instead of 'contains' to get the actual booking record
+                            $activeBooking = $room->bookings->first(function ($booking) use ($date) {
+                                $from = $booking->pivot->from_date;
+                                $to = $booking->pivot->to_date;
+
+                                return $date->between($from, $to->copy()->subDay());
+                            });
                         @endphp
 
                         <div
-                            class="h-12 border-b border-l transition-colors cursor-pointer hover:bg-gray-50
-                        {{ $isBooked ? 'bg-red-500 hover:bg-red-600' : '' }}">
+                            class="h-12 border-b border-l transition-colors cursor-pointer text-[10px] flex items-center justify-center
+        {{ $activeBooking ? 'bg-red-500 hover:bg-red-600 text-white font-bold' : 'hover:bg-gray-50' }}">
+
+                            @if ($activeBooking)
+                                #{{ $activeBooking->id }}
+                            @endif
+
                         </div>
                     @endforeach
                 @endforeach

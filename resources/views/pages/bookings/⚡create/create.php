@@ -2,6 +2,8 @@
 
 use App\Models\Booking;
 use App\Models\Guest;
+use App\Models\Property;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 new class extends Component
@@ -17,6 +19,14 @@ new class extends Component
 
     public $check_in;
     public $check_out;
+    public array $selectedRooms = []; // Stores room_id => [from, to]
+
+    #[Computed()]
+    public function availableRooms()
+    {
+        $property = Property::find($this->property_id);
+        return $property?->rooms ?? [];
+    }
 
     public function mount()
     {
@@ -47,6 +57,16 @@ new class extends Component
         $booking = Booking::create($data + [
             'guest_id' => $guest->id
         ]);
+
+        $validRooms = collect($this->selectedRooms)->filter(function ($value) {
+            return !empty($value);
+        });
+        foreach ($validRooms as $roomId => $dates) {
+            $booking->rooms()->attach($roomId, [
+                'from_date' => $dates['from'] ?? $this->check_in,
+                'to_date' => $dates['to'] ?? $this->check_out,
+            ]);
+        }
 
         return to_route('bookings.index');
     }

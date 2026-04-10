@@ -11,8 +11,8 @@
 
         <flux:card>
             <div class="grid grid-cols-2 gap-4">
-                <flux:input type="date" label="Check in" wire:model="check_in" required />
-                <flux:input type="date" label="Check out" wire:model="check_out" required />
+                <flux:input type="date" label="Check in" x-model="$wire.check_in" :min="now()->format('Y-m-d')" required />
+                <flux:input type="date" label="Check out" x-model="$wire.check_out" x-bind:min="new Date(new Date($wire.check_in).getTime() + 86400000).toISOString().split('T')[0]" required />
             </div>
         </flux:card>
 
