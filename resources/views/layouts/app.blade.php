@@ -37,7 +37,10 @@
             <flux:sidebar.group expandable icon="star" heading="Inventory" class="grid">
                 <flux:sidebar.item :href="route('room-categories.index')">Room Categories</flux:sidebar.item>
                 <flux:sidebar.item :href="route('rooms.index')">Rooms</flux:sidebar.item>
-                <flux:sidebar.item href="#">Brand guidelines</flux:sidebar.item>
+            </flux:sidebar.group>
+
+            <flux:sidebar.group expandable icon="star" heading="Business" class="grid">
+                <flux:sidebar.item :href="route('travel-agencies.index')">Travel Agencies</flux:sidebar.item>
             </flux:sidebar.group>
         </flux:sidebar.nav>
 
