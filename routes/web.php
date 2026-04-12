@@ -20,7 +20,7 @@ Route::middleware('auth')->group(function () {
 
     Route::view('/rooms', 'pages::rooms.index')->name('rooms.index');
     Route::livewire('/rooms/create', 'pages::rooms.form')->name('rooms.form');
-    Route::livewire('/rooms/{roomCategory}/edit', 'pages::rooms.form')->name('rooms.form');
+    Route::livewire('/rooms/{room}/edit', 'pages::rooms.form')->name('rooms.form');
 
     Route::view('/bookings', 'pages::bookings.index')->name('bookings.index');
     Route::livewire('/bookings/create', 'pages::bookings.create')->name('bookings.create');

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['property_id', 'guest_id', 'check_in', 'check_out', 'status'])]
+#[Fillable(['property_id', 'guest_id', 'check_in', 'check_out', 'status', 'source_channel', 'source_type', 'source_id'])]
 class Booking extends Model
 {
     use BelongsToProperty, SoftDeletes;
@@ -29,5 +29,10 @@ class Booking extends Model
         return $this->belongsToMany(Room::class)
             ->using(BookingRoom::class)
             ->withPivot(['from_date', 'to_date']);
+    }
+
+    public function source()
+    {
+        return $this->morphTo();
     }
 }

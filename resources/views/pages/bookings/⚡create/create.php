@@ -1,8 +1,11 @@
 <?php
 
+use App\Enums\Enums\BookingSource;
 use App\Models\Booking;
 use App\Models\Guest;
 use App\Models\Property;
+use App\Models\TravelAgency;
+use Flux\Flux;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -20,6 +23,20 @@ new class extends Component
     public $check_in;
     public $check_out;
     public array $selectedRooms = []; // Stores room_id => [from, to]
+    public string $source_channel;
+    public $source_id;
+
+    #[Computed()]
+    public function sources()
+    {
+        return BookingSource::cases();
+    }
+
+    #[Computed()]
+    public function travelAgencies()
+    {
+        return TravelAgency::where('property_id', $this->property_id)->get();
+    }
 
     #[Computed()]
     public function availableRooms()
@@ -43,6 +60,7 @@ new class extends Component
             'guest.last_name' => 'nullable|string',
             'guest.email' => 'nullable|string',
             'guest.phone' => 'nullable|string',
+            'source_channel' => 'required|string',
         ];
     }
 
@@ -50,6 +68,11 @@ new class extends Component
     {
         $data = $this->validate();
 
+        if ($this->source_channel == BookingSource::TravelAgency->value) {
+            $data['source_type'] = TravelAgency::class;
+            $data['source_id'] = $this->source_id;
+        }
+        
         $guest = Guest::create($data['guest'] + [
             'property_id' => $this->property_id
         ]);
