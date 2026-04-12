@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\RoomCategory;
+use Flux\Flux;
 use Livewire\Component;
 
 new class extends Component
@@ -37,7 +38,13 @@ new class extends Component
 
         $this->reset();
 
-        return to_route('room-categories.index');
+         Flux::toast(
+            heading: 'Changes saved',
+            text: 'Your changes have been saved.',
+            variant: 'success',
+        );
+
+        return $this->redirectRoute('room-categories.index', navigate: true);
     }
 };
 ?>

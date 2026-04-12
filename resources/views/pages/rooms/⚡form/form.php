@@ -2,6 +2,7 @@
 
 use App\Models\Property;
 use App\Models\Room;
+use Flux\Flux;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -23,7 +24,7 @@ new class extends Component
     public function mount(?Room $room = null)
     {
         $this->property_id = 1;
-        
+
         if ($room && $room->exists) {
             $this->fill($room->toArray());
         }
@@ -49,6 +50,12 @@ new class extends Component
 
         $this->reset();
 
-        return to_route('rooms.index');
+        Flux::toast(
+            heading: 'Changes saved',
+            text: 'Your changes have been saved.',
+            variant: 'success',
+        );
+
+        return $this->redirectRoute('rooms.index', navigate: true);
     }
 };
