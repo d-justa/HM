@@ -12,12 +12,22 @@ new class extends Component
     public string $website = '';
     public string $note = '';
 
+    public array $address = [
+        'line_1' => '',
+        'line_2' => '',
+        'city' => '',
+        'state' => '',
+        'zip' => '',
+        'country' => '',
+    ];
+
     public function mount(?TravelAgency $travelAgency = null)
     {
         $this->property_id = 1;
         
         if ($travelAgency && $travelAgency->exists) {
             $this->fill($travelAgency->toArray());
+            $this->address = $travelAgency->address->toArray();
         }
     }
 
@@ -39,6 +49,7 @@ new class extends Component
             'id' => $this->travelAgency?->id
         ], $data);
 
+        $travelAgency->updateAddress($this->address);
 
         $this->reset();
 

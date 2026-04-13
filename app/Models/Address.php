@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
     'line_2',
     'city',
     'state',
+    'zip',
     'country',
     'type'
 ])]

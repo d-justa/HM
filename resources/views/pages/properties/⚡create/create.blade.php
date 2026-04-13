@@ -8,6 +8,19 @@
         </flux:card>
 
         <flux:card>
+            <flux:heading>Address Details</flux:heading>
+            <flux:separator class="my-2" />
+            <div class="grid grid-cols-3 gap-4">
+                <flux:input label="Address Line 1" wire:model="address.line_1" />
+                <flux:input label="Address Line 2" wire:model="address.line_2" />
+                <flux:input label="City" wire:model="address.city" />
+                <flux:input label="State" wire:model="address.state" />
+                <flux:input label="Zip" wire:model="address.zip" />
+                <flux:input label="Country" wire:model="address.country" />
+            </div>
+        </flux:card>
+
+        <flux:card>
             <div class="flex justify-between items-center">
                 <flux:heading>Add Property Manager</flux:heading>
                 <flux:field variant="inline">

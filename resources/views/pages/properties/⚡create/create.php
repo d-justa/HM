@@ -8,6 +8,15 @@ new class extends Component {
     public string $name = '';
     public string $subdomain = '';
 
+    public array $address = [
+        'line_1' => '',
+        'line_2' => '',
+        'city' => '',
+        'state' => '',
+        'zip' => '',
+        'country' => '',
+    ];
+
     public array $manager = [
         'add' => false,
         'name' => '',
@@ -31,6 +40,8 @@ new class extends Component {
         $data = $this->validate();
 
         $property = Property::create($data);
+
+        $property->updateAddress($this->address);
 
         if ($this->manager['add']) {
             User::create($data['manager'] + [
