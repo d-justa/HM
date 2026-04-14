@@ -1,5 +1,7 @@
 <div>
     <form wire:submit="save" class="space-y-4">
+        <flux:input label="Booking No" wire:model="code" required />
+
         <flux:card>
             <div class="grid grid-cols-2 gap-4">
                 <flux:input label="First Name" wire:model="guest.first_name" required />
@@ -16,6 +18,8 @@
                 <flux:input type="date" label="Check out" x-model="$wire.check_out"
                     x-bind:min="new Date(new Date($wire.check_in).getTime() + 86400000).toISOString().split('T')[0]"
                     required />
+                <flux:input type="number" label="Adults" wire:model="adults" min="1" requried />
+                <flux:input type="number" label="Children" wire:model="children" min="0" />
             </div>
         </flux:card>
 
@@ -34,6 +38,7 @@
                     @endforeach
                 </flux:select>
             </template>
+            <flux:textarea label="Note" wire:model="note" />
         </flux:card>
 
         <div class="flex">

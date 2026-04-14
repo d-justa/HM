@@ -14,9 +14,9 @@ class Room extends Model
 {
     use BelongsToProperty, SoftDeletes;
 
-    public function roomCategory(): BelongsTo
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(RoomCategory::class);
+        return $this->belongsTo(RoomCategory::class, 'room_category_id');
     }
 
     public function bookings(): BelongsToMany

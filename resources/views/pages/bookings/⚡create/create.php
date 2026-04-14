@@ -20,8 +20,12 @@ new class extends Component
         'phone' => '',
     ];
 
+    public string $code = '';
     public $check_in;
     public $check_out;
+    public $adults;
+    public $children;
+    public string $note = '';
     public array $selectedRooms = []; // Stores room_id => [from, to]
     public string $source_channel;
     public $source_id;
@@ -54,13 +58,17 @@ new class extends Component
     {
         return [
             'property_id' => 'required',
+            'code' => 'required|string',
             'check_in' => 'required',
             'check_out' => 'required',
+            'adults' => 'nullable|numeric|min:1',
+            'children' => 'nullable|numeric|min:0',
             'guest.first_name' => 'required|string',
             'guest.last_name' => 'nullable|string',
             'guest.email' => 'nullable|string',
             'guest.phone' => 'nullable|string',
             'source_channel' => 'required|string',
+            'note' => 'nullable|string',
         ];
     }
 
@@ -72,7 +80,7 @@ new class extends Component
             $data['source_type'] = TravelAgency::class;
             $data['source_id'] = $this->source_id;
         }
-        
+
         $guest = Guest::create($data['guest'] + [
             'property_id' => $this->property_id
         ]);

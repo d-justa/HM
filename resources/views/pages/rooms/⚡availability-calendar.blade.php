@@ -74,6 +74,8 @@ new class extends Component {
                 @foreach ($rooms as $room)
                     <div class="sticky left-0 z-10 p-2 text-sm font-medium bg-white border-b shadow-sm">
                         {{ $room->name }}
+                        <br>
+                        <flux:text class="text-xs">{{ $room->category->name }}</flux:text>
                     </div>
 
                     @foreach ($days as $date)
@@ -88,7 +90,7 @@ new class extends Component {
                         @endphp
 
                         <div
-                            class="h-12 border-b border-l transition-colors cursor-pointer text-[10px] flex items-center justify-center">
+                            class="h-14 border-b border-l transition-colors cursor-pointer text-[10px] flex items-center justify-center">
 
                             @if ($activeBooking)
                                 <flux:button wire:click="showBooking({{ $activeBooking->id }})" variant="ghost"
