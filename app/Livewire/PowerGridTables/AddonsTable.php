@@ -2,7 +2,7 @@
 
 namespace App\Livewire\PowerGridTables;
 
-use App\Models\RoomCategory;
+use App\Models\Addon;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Button;
@@ -12,9 +12,9 @@ use PowerComponents\LivewirePowerGrid\Facades\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 
-final class RoomCategoriesTable extends PowerGridComponent
+final class AddonsTable extends PowerGridComponent
 {
-    public string $tableName = 'roomCategoriesTable';
+    public string $tableName = 'addonsTable';
 
     public function setUp(): array
     {
@@ -31,7 +31,7 @@ final class RoomCategoriesTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return RoomCategory::query();
+        return Addon::query();
     }
 
     public function relationSearch(): array
@@ -45,9 +45,8 @@ final class RoomCategoriesTable extends PowerGridComponent
             ->add('id')
             ->add('property_id')
             ->add('name')
-            ->add('rooms_count', fn($category) => $category->rooms()->count())
-            ->add('description')
-            ->add('created_at_formatted', fn(RoomCategory $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
+            ->add('default_price')
+            ->add('created_at_formatted', fn (Addon $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
     }
 
     public function columns(): array
@@ -59,12 +58,9 @@ final class RoomCategoriesTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::make('Description', 'description')
+            Column::make('Default price', 'default_price')
                 ->sortable()
                 ->searchable(),
-
-            Column::make('# Rooms', 'rooms_count')
-                ->sortable(),
 
             Column::make('Created at', 'created_at_formatted', 'created_at')
                 ->sortable(),
@@ -83,14 +79,14 @@ final class RoomCategoriesTable extends PowerGridComponent
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): void
     {
-        $this->js('alert(' . $rowId . ')');
+        $this->js('alert('.$rowId.')');
     }
 
-    public function actions(RoomCategory $row): array
+    public function actions(Addon $row): array
     {
         return [
             Button::add('edit')
-                ->slot('Edit: ' . $row->id)
+                ->slot('Edit: '.$row->id)
                 ->id()
                 ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
                 ->dispatch('edit', ['rowId' => $row->id])

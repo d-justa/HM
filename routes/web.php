@@ -30,6 +30,10 @@ Route::middleware('auth')->group(function () {
     Route::view('/travel-agencies', 'pages::travel-agencies.index')->name('travel-agencies.index');
     Route::livewire('/travel-agencies/create', 'pages::travel-agencies.form')->name('travel-agencies.form');
     Route::livewire('/travel-agencies/{travelAgency}/edit', 'pages::travel-agencies.form')->name('travel-agencies.form');
-    
+
+    Route::view('/addons', 'pages::addons.index')->name('addons.index');
+    Route::livewire('/addons/create', 'pages::addons.form')->name('addons.form');
+    Route::livewire('/addons/{addon}/edit', 'pages::addons.form')->name('addons.form');
+
     Route::livewire('/rooms/availability-calendar', 'pages::rooms.availability-calendar')->name('rooms.availability-calendar');
 });
