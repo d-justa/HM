@@ -31,7 +31,7 @@
                 <flux:sidebar.item :href="route('rooms.availability-calendar')">Availability Calendar</flux:sidebar.item>
                 <flux:sidebar.item :href="route('bookings.index')">Bookings</flux:sidebar.item>
                 <flux:sidebar.item :href="route('guests.index')">Guests</flux:sidebar.item>
-                {{-- <flux:sidebar.item href="#">Brand guidelines</flux:sidebar.item> --}}
+                <flux:sidebar.item :href="route('payments.index')">Payments</flux:sidebar.item>
             </flux:sidebar.group>
 
             <flux:sidebar.group expandable icon="star" heading="Inventory" class="grid">

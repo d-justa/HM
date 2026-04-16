@@ -27,8 +27,9 @@ new class extends Component
     public $children;
     public string $note = '';
     public array $selectedRooms = []; // Stores room_id => [from, to]
-    public string $source_channel;
+    public string $source_channel = 'direct';
     public $source_id;
+    public $booking_date;
 
     #[Computed()]
     public function sources()
@@ -52,6 +53,7 @@ new class extends Component
     public function mount()
     {
         $this->property_id = 1;
+        $this->booking_date = now();
     }
 
     protected function rules()
@@ -69,6 +71,7 @@ new class extends Component
             'guest.phone' => 'nullable|string',
             'source_channel' => 'required|string',
             'note' => 'nullable|string',
+            'booking_date' => 'required',
         ];
     }
 

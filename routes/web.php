@@ -35,5 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::livewire('/addons/create', 'pages::addons.form')->name('addons.form');
     Route::livewire('/addons/{addon}/edit', 'pages::addons.form')->name('addons.form');
 
+    Route::view('/payments', 'pages::payments.index')->name('payments.index');
+    Route::livewire('/payments/create', 'pages::payments.form')->name('payments.form');
+
     Route::livewire('/rooms/availability-calendar', 'pages::rooms.availability-calendar')->name('rooms.availability-calendar');
 });
