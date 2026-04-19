@@ -3,6 +3,7 @@
 namespace App\Livewire\PowerGridTables;
 
 use App\Models\Room;
+use App\Traits\PowerGridActions;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Button;
@@ -14,6 +15,8 @@ use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 
 final class RoomsTable extends PowerGridComponent
 {
+    use PowerGridActions;
+
     public string $tableName = 'roomsTable';
 
     public function setUp(): array
@@ -26,6 +29,13 @@ final class RoomsTable extends PowerGridComponent
             PowerGrid::footer()
                 ->showPerPage()
                 ->showRecordCount(),
+        ];
+    }
+
+    public function header(): array
+    {
+        return [
+            $this->addNewButton('rooms.create'),
         ];
     }
 
@@ -43,7 +53,7 @@ final class RoomsTable extends PowerGridComponent
     {
         return PowerGrid::fields()
             ->add('id')
-            ->add('property_id')
+            ->add('property.name')
             ->add('room_category_id')
             ->add('name')
             ->add('created_at_formatted', fn (Room $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
@@ -53,7 +63,7 @@ final class RoomsTable extends PowerGridComponent
     {
         return [
             Column::make('Id', 'id'),
-            Column::make('Property id', 'property_id'),
+            $this->propertyName(),
             Column::make('Room category id', 'room_category_id'),
             Column::make('Name', 'name')
                 ->sortable()

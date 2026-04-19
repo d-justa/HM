@@ -3,6 +3,7 @@
 namespace App\Livewire\PowerGridTables;
 
 use App\Models\Property;
+use App\Traits\PowerGridActions;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Button;
@@ -14,6 +15,8 @@ use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 
 final class PropertiesTable extends PowerGridComponent
 {
+    use PowerGridActions;
+
     public string $tableName = 'propertiesTable';
 
     public function setUp(): array
@@ -26,6 +29,13 @@ final class PropertiesTable extends PowerGridComponent
             PowerGrid::footer()
                 ->showPerPage()
                 ->showRecordCount(),
+        ];
+    }
+
+    public function header(): array
+    {
+        return [
+            $this->addNewButton('properties.create'),
         ];
     }
 

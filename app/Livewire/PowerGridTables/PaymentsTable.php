@@ -3,6 +3,7 @@
 namespace App\Livewire\PowerGridTables;
 
 use App\Models\Payment;
+use App\Traits\PowerGridActions;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Button;
@@ -14,6 +15,8 @@ use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 
 final class PaymentsTable extends PowerGridComponent
 {
+    use PowerGridActions;
+
     public string $tableName = 'paymentsTable';
 
     public function setUp(): array
@@ -26,6 +29,13 @@ final class PaymentsTable extends PowerGridComponent
             PowerGrid::footer()
                 ->showPerPage()
                 ->showRecordCount(),
+        ];
+    }
+
+    public function header(): array
+    {
+        return [
+            $this->addNewButton('payments.create'),
         ];
     }
 
@@ -43,7 +53,7 @@ final class PaymentsTable extends PowerGridComponent
     {
         return PowerGrid::fields()
             ->add('id')
-            ->add('property_id')
+            ->add('property.name')
             ->add('booking_id')
             ->add('amount')
             ->add('method')
@@ -57,7 +67,7 @@ final class PaymentsTable extends PowerGridComponent
     {
         return [
             Column::make('Id', 'id'),
-            Column::make('Property id', 'property_id'),
+            $this->propertyName(),
             Column::make('Booking id', 'booking_id'),
             Column::make('Amount', 'amount')
                 ->sortable()

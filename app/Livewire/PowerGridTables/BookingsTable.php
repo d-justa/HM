@@ -3,6 +3,7 @@
 namespace App\Livewire\PowerGridTables;
 
 use App\Models\Booking;
+use App\Traits\PowerGridActions;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Button;
@@ -14,6 +15,8 @@ use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 
 final class BookingsTable extends PowerGridComponent
 {
+    use PowerGridActions;
+
     public string $tableName = 'bookingsTable';
 
     public function setUp(): array
@@ -26,6 +29,13 @@ final class BookingsTable extends PowerGridComponent
             PowerGrid::footer()
                 ->showPerPage()
                 ->showRecordCount(),
+        ];
+    }
+
+    public function header(): array
+    {
+        return [
+            $this->addNewButton('bookings.create'),
         ];
     }
 

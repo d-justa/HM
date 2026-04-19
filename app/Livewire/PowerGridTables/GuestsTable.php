@@ -3,6 +3,7 @@
 namespace App\Livewire\PowerGridTables;
 
 use App\Models\Guest;
+use App\Traits\PowerGridActions;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Button;
@@ -14,6 +15,8 @@ use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 
 final class GuestsTable extends PowerGridComponent
 {
+    use PowerGridActions;
+    
     public string $tableName = 'guestsTable';
 
     public function setUp(): array
@@ -43,7 +46,7 @@ final class GuestsTable extends PowerGridComponent
     {
         return PowerGrid::fields()
             ->add('id')
-            ->add('property_id')
+            ->add('property.name')
             ->add('first_name')
             ->add('last_name')
             ->add('email')
@@ -56,7 +59,7 @@ final class GuestsTable extends PowerGridComponent
     {
         return [
             Column::make('Id', 'id'),
-            Column::make('Property id', 'property_id'),
+            $this->propertyName(),
             Column::make('First name', 'first_name')
                 ->sortable()
                 ->searchable(),

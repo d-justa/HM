@@ -15,12 +15,12 @@ Route::middleware('auth')->group(function () {
     Route::livewire('/properties/create', 'pages::properties.create')->name('properties.create');
 
     Route::view('/room-categories', 'pages::room-categories.index')->name('room-categories.index');
-    Route::livewire('/room-categories/create', 'pages::room-categories.form')->name('room-categories.form');
-    Route::livewire('/room-categories/{roomCategory}/edit', 'pages::room-categories.form')->name('room-categories.form');
+    Route::livewire('/room-categories/create', 'pages::room-categories.form')->name('room-categories.create');
+    Route::livewire('/room-categories/{roomCategory}/edit', 'pages::room-categories.form')->name('room-categories.edit');
 
     Route::view('/rooms', 'pages::rooms.index')->name('rooms.index');
-    Route::livewire('/rooms/create', 'pages::rooms.form')->name('rooms.form');
-    Route::livewire('/rooms/{room}/edit', 'pages::rooms.form')->name('rooms.form');
+    Route::livewire('/rooms/create', 'pages::rooms.form')->name('rooms.create');
+    Route::livewire('/rooms/{room}/edit', 'pages::rooms.form')->name('rooms.edit');
 
     Route::view('/bookings', 'pages::bookings.index')->name('bookings.index');
     Route::livewire('/bookings/create', 'pages::bookings.create')->name('bookings.create');
@@ -28,15 +28,15 @@ Route::middleware('auth')->group(function () {
     Route::view('/guests', 'pages::guests.index')->name('guests.index');
 
     Route::view('/travel-agencies', 'pages::travel-agencies.index')->name('travel-agencies.index');
-    Route::livewire('/travel-agencies/create', 'pages::travel-agencies.form')->name('travel-agencies.form');
-    Route::livewire('/travel-agencies/{travelAgency}/edit', 'pages::travel-agencies.form')->name('travel-agencies.form');
+    Route::livewire('/travel-agencies/create', 'pages::travel-agencies.form')->name('travel-agencies.create');
+    Route::livewire('/travel-agencies/{travelAgency}/edit', 'pages::travel-agencies.form')->name('travel-agencies.edit');
 
     Route::view('/addons', 'pages::addons.index')->name('addons.index');
-    Route::livewire('/addons/create', 'pages::addons.form')->name('addons.form');
-    Route::livewire('/addons/{addon}/edit', 'pages::addons.form')->name('addons.form');
+    Route::livewire('/addons/create', 'pages::addons.form')->name('addons.create');
+    Route::livewire('/addons/{addon}/edit', 'pages::addons.form')->name('addons.edit');
 
     Route::view('/payments', 'pages::payments.index')->name('payments.index');
-    Route::livewire('/payments/create', 'pages::payments.form')->name('payments.form');
+    Route::livewire('/payments/create', 'pages::payments.form')->name('payments.create');
 
     Route::livewire('/rooms/availability-calendar', 'pages::rooms.availability-calendar')->name('rooms.availability-calendar');
 });
