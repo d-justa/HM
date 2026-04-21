@@ -26,7 +26,13 @@ new class extends Component
     public $adults;
     public $children;
     public string $note = '';
-    public array $selectedRooms = []; // Stores room_id => [from, to]
+    public array $selectedRooms = [
+        [
+            'room_id' => '',
+            'from_date' => null,
+            'to_date' => null
+        ]
+    ]; // Stores room_id => [from, to]
     public string $source_channel = 'direct';
     public $source_id;
     public $booking_date;
@@ -72,6 +78,8 @@ new class extends Component
             'source_channel' => 'required|string',
             'note' => 'nullable|string',
             'booking_date' => 'required',
+            'selectedRooms' => 'required|array|min:1',
+
         ];
     }
 
@@ -92,13 +100,10 @@ new class extends Component
             'guest_id' => $guest->id
         ]);
 
-        $validRooms = collect($this->selectedRooms)->filter(function ($value) {
-            return !empty($value);
-        });
-        foreach ($validRooms as $roomId => $dates) {
-            $booking->rooms()->attach($roomId, [
-                'from_date' => $dates['from'] ?? $this->check_in,
-                'to_date' => $dates['to'] ?? $this->check_out,
+        foreach ($this->selectedRooms as $selectedRoom) {
+            $booking->rooms()->attach($selectedRoom['room_id'], [
+                'from_date' => $selectedRoom['from_date'] ?? $this->check_in,
+                'to_date' => $selectedRoom['to_date'] ?? $this->check_out,
             ]);
         }
 
