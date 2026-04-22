@@ -72,10 +72,10 @@ new class extends Component {
                 @endforeach
 
                 @foreach ($rooms as $room)
-                    <div class="sticky left-0 z-10 p-2 text-sm font-medium bg-white border-b shadow-sm">
+                    <div class="sticky left-0 z-10 p-1 text-sm font-medium bg-white border-b shadow-sm">
                         {{ $room->name }}
-                        <br>
-                        <flux:text class="text-xs">{{ $room->category->name }}</flux:text>
+                        {{-- <br>
+                        <flux:text class="text-xs">{{ $room->category->name }}</flux:text> --}}
                     </div>
 
                     @foreach ($days as $date)
@@ -90,13 +90,13 @@ new class extends Component {
                         @endphp
 
                         <div
-                            class="h-14 border-b border-l transition-colors cursor-pointer text-[10px] flex items-center justify-center">
+                            class="h-8 border-b border-l transition-colors cursor-pointer text-[10px] flex items-center justify-center">
 
                             @if ($activeBooking)
                                 <flux:button wire:click="showBooking({{ $activeBooking->id }})" variant="ghost"
-                                    size="xs"  :loading="false">
+                                    size="xs" :loading="false">
                                     #{{ $activeBooking->id }}
-                                </flux:button>
+                                </flux:button> 
                             @endif
 
                         </div>
@@ -105,10 +105,10 @@ new class extends Component {
             </div>
         </div>
 
-        <div class="flex gap-4 mt-4 text-xs">
+        {{-- <div class="flex gap-4 mt-4 text-xs">
             <div class="flex items-center gap-1"><span class="w-3 h-3 bg-red-500 rounded"></span> Booked</div>
             <div class="flex items-center gap-1"><span class="w-3 h-3 border rounded"></span> Available</div>
-        </div>
+        </div> --}}
 
         <flux:modal name="show-booking" flyout>
             <div class="space-y-6">
@@ -122,27 +122,50 @@ new class extends Component {
                     <flux:separator />
 
                     <div class="space-y-4">
-                        <flux:legend>Stay Information</flux:legend>
-                        <div class="grid grid-cols-2 gap-4">
-                            <flux:text size="sm">Check-in:
-                                <b>{{ $showingBooking->check_in->format('d M, Y') }}</b>
-                            </flux:text>
-                            <flux:text size="sm">Check-out:
-                                <b>{{ $showingBooking->check_out->format('d M, Y') }}</b>
-                            </flux:text>
+                        <div class="space-y-2">
+                            <flux:legend>Stay Information</flux:legend>
+                            <div class="grid grid-cols-2 gap-4">
+                                <flux:text size="sm">Check-in:
+                                    <b>{{ $showingBooking->check_in->format('d M, Y') }}</b>
+                                </flux:text>
+                                <flux:text size="sm">Check-out:
+                                    <b>{{ $showingBooking->check_out->format('d M, Y') }}</b>
+                                </flux:text>
+                            </div>
                         </div>
 
                         <flux:separator variant="subtle" />
 
-                        <flux:legend>Guest Contact</flux:legend>
-                        <flux:text size="sm">Email: {{ $showingBooking->guest->email ?? 'N/A' }}</flux:text>
-                        <flux:text size="sm">Phone: {{ $showingBooking->guest->phone ?? 'N/A' }}</flux:text>
-                    </div>
+                        <div class="space-y-2">
+                            <flux:legend>Guest Contact</flux:legend>
+                            <flux:text size="sm">Email: {{ $showingBooking->guest->email ?? 'N/A' }}</flux:text>
+                            <flux:text size="sm">Phone: {{ $showingBooking->guest->phone ?? 'N/A' }}</flux:text>
+                        </div>
 
-                    <div class="flex">
-                        <flux:spacer />
-                        <flux:button variant="danger" wire:click="deleteBooking({{ $showingBooking->id }})"
-                            wire:confirm="Are you sure?">Cancel Booking</flux:button>
+                        <flux:separator variant="subtle" />
+
+                        <div>
+                            <flux:legend>Room Details</flux:legend>
+                            <div>
+                                <flux:table class="max-w-md">
+                                    <flux:table.columns>
+                                        <flux:table.column>Room</flux:table.column>
+                                        <flux:table.column>From</flux:table.column>
+                                        <flux:table.column>Date</flux:table.column>
+                                    </flux:table.columns>
+
+                                    <flux:table.rows>
+                                        @foreach ($showingBooking->rooms as $room)
+                                            <flux:table.row>
+                                                <flux:table.cell>{{ $room->name }}</flux:table.cell>
+                                                <flux:table.cell>{{ $room->pivot->from_date->format('d M, Y') }}</flux:table.cell>
+                                                <flux:table.cell>{{ $room->pivot->to_date->format('d M, Y') }}</flux:table.cell>
+                                            </flux:table.row>
+                                        @endforeach
+                                    </flux:table.rows>
+                                </flux:table>
+                            </div>
+                        </div>
                     </div>
                 @else
                     <div class="flex justify-center py-10">
