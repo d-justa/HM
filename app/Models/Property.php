@@ -21,4 +21,9 @@ class Property extends Model
     {
         return $this->hasMany(Room::class);
     }
+
+    public function addons(): HasMany
+    {
+        return $this->hasMany(Addon::class);
+    }
 }

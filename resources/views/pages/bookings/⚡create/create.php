@@ -36,6 +36,7 @@ new class extends Component
     public string $source_channel = 'direct';
     public $source_id;
     public $booking_date;
+    public array $selectedAddons = [];
 
     #[Computed()]
     public function sources()
@@ -54,6 +55,13 @@ new class extends Component
     {
         $property = Property::find($this->property_id);
         return $property?->rooms ?? [];
+    }
+
+    #[Computed()]
+    public function availableAddons()
+    {
+        $property = Property::find($this->property_id);
+        return $property?->addons ?? [];
     }
 
     public function mount()
