@@ -115,6 +115,10 @@ new class extends Component
             ]);
         }
 
+        foreach ($this->selectedAddons as $selectedAddon) {
+            $booking->addons()->create($selectedAddon);
+        }
+        
         return to_route('bookings.index');
     }
 };
