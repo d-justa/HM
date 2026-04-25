@@ -14,7 +14,7 @@ class MountainGalaxySeeder extends Seeder
      *
      * @return void
      */
-public function run(): void
+    public function run(): void
     {
         // 1. BEST PRACTICE: Idempotent Property Creation (Unique by subdomain)
         $property = Property::firstOrCreate(
@@ -77,6 +77,18 @@ public function run(): void
                 // It is hundreds of times faster than 11 separate create() calls.
                 $category->rooms()->insert($roomsToInsert);
             }
+        }
+
+        $addons = [
+            'Honeymoon Inclusion',
+            'Candle Light Dinner',
+            'Bonfire'
+        ];
+
+        foreach ($addons as $addon) {
+            $property->addons()->firstOrCreate([
+                'name' => $addon
+            ]);
         }
     }
 }
